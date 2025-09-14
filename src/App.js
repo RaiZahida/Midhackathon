@@ -6,6 +6,7 @@ import Events from './pages/Events';
 import EventDetail from './pages/EventDetail';
 import Register from './pages/Register';
 import Admin from './pages/Admin';
+import Favorites from './pages/Favorites';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/events/:id" element={<EventDetail />} />
         <Route path="/register/:id" element={<Register />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </div>
   );

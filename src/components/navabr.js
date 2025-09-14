@@ -109,6 +109,7 @@ useEffect(() => {
               Contact
             </button>
             <Link to="/events" className="hover:text-[#778da9] text-sm lg:text-base">Events</Link>
+            <Link to="/favorites" className="hover:text-[#778da9] text-sm lg:text-base">Favourites</Link>
             {userEmail === 'admin@admin.com' && (
               <Link to="/admin" className="hover:text-[#778da9] text-sm lg:text-base">Admin</Link>
             )}
@@ -143,7 +144,7 @@ useEffect(() => {
 
           {/* Mobile Hamburger */}
           <button
-            className="md:hidden text-white"
+            className="md:hidden text-white p-2"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? "✖" : "☰"}
@@ -152,8 +153,8 @@ useEffect(() => {
 
         {/* Mobile Menu */}
           {isOpen && (
-          <div className="md:hidden bg-[#1b263b] px-4 pb-3 space-y-2 text-sm text-center">
-            <Link to="/" className="block text-white hover:text-[#778da9]">Home</Link>
+          <div className="md:hidden bg-[#1b263b] px-6 py-4 space-y-3 text-sm text-center">
+            <Link to="/" className="block text-white hover:text-[#778da9] py-2">Home</Link>
             <button
               onClick={() => {
                 navigate('/');
@@ -165,7 +166,7 @@ useEffect(() => {
                   }
                 }, 100);
               }}
-              className="block text-white hover:text-[#778da9] bg-transparent border-none cursor-pointer w-full"
+              className="block text-white hover:text-[#778da9] bg-transparent border-none cursor-pointer w-full py-2"
             >
               Services
             </button>
@@ -180,22 +181,37 @@ useEffect(() => {
                   }
                 }, 100);
               }}
-              className="block text-white hover:text-[#778da9] bg-transparent border-none cursor-pointer w-full"
+              className="block text-white hover:text-[#778da9] bg-transparent border-none cursor-pointer w-full py-2"
             >
               Contact
             </button>
-            <Link to="/events" className="block text-white hover:text-[#778da9]">Events</Link>
+            <Link to="/events" className="block text-white hover:text-[#778da9] py-2">Events</Link>
+            <Link to="/favorites" className="block text-white hover:text-[#778da9] py-2">Favourites</Link>
             {userEmail === 'admin@admin.com' && (
-              <Link to="/dashboard" className="block text-white hover:text-[#778da9]">Dashboard</Link>
+              <Link to="/dashboard" className="block text-white hover:text-[#778da9] py-2">Dashboard</Link>
             )}
 
-            <Link
-              to="/signin"
-              className="block bg-[#778da9] text-[#e0e1dd] px-3 py-1 rounded-md hover:bg-[#415a77] mx-auto w-fit"
-              onClick={() => setIsOpen(false)}
-            >
-              Sign In
-            </Link>
+            {!userEmail && (
+              <Link
+                to="/signin"
+                className="block bg-[#778da9] text-[#e0e1dd] px-4 py-2 rounded-md hover:bg-[#415a77] mx-auto w-fit"
+                onClick={() => setIsOpen(false)}
+              >
+                Sign In
+              </Link>
+            )}
+
+            {userEmail && (
+              <button
+                onClick={() => {
+                  setShowLogoutModal(true);
+                  setIsOpen(false);
+                }}
+                className="block bg-[#778da9] text-[#e0e1dd] px-4 py-2 rounded-md hover:bg-[#415a77] mx-auto w-fit"
+              >
+                Logout
+              </button>
+            )}
           </div>
         )}
         {showLogoutModal && (
@@ -219,7 +235,7 @@ useEffect(() => {
                 </button>
                 <button
                   onClick={handleLogout}
-                  className="px-6 sm:px-8 py-3 bg-[#415a77] text-[#e0e1dd] rounded-xl hover:bg-[#778da9] transition-all duration-300 font-semibold shadow-lg hover:shadow-xl w-full sm:w-auto"
+                  className="px-6 sm:px-8 py-3 bg-red-600 text-[#e0e1dd] rounded-xl hover:bg-red-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl w-full sm:w-auto"
                 >
                   Logout
                 </button>

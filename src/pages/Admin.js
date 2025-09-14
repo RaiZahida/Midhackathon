@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { firestore } from '../configuration/firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { useNavigate  } from 'react-router-dom';
 
 const Admin = () => {
   const [registrations, setRegistrations] = useState([]);
@@ -12,6 +13,8 @@ const Admin = () => {
   const [newEventDate, setNewEventDate] = useState('');
   const [newEventDescription, setNewEventDescription] = useState('');
   const [newEventImage, setNewEventImage] = useState('');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,7 +147,13 @@ const Admin = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-6 overflow-auto">
+      <div className="flex-1 p-6 overflow-auto relative">
+        <button
+          onClick={() => navigate('/')}
+          className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+        >
+          ✕
+        </button>
         {activeTab === 'userDetails' && (
           <>
             <h1 className="text-4xl font-bold mb-6 text-center">User Registrations</h1>

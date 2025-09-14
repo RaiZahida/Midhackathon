@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { firestore } from '../configuration/firebase';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { firestore, auth } from '../configuration/firebase';
+import { collection, onSnapshot, addDoc, deleteDoc, doc, query, where, getDocs } from 'firebase/firestore';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
 const Events = () => {
   const navigate = useNavigate();
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(firestore, 'events'), (snapshot) => {
@@ -20,8 +22,53 @@ const Events = () => {
     return unsubscribe;
   }, []);
 
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (!auth.currentUser) {
+        setFavorites([]);
+        return;
+      }
+      const q = query(
+        collection(firestore, 'favorites'),
+        where('userId', '==', auth.currentUser.uid)
+      );
+      const querySnapshot = await getDocs(q);
+      const favs = querySnapshot.docs.map(doc => doc.data().eventId);
+      setFavorites(favs);
+    };
+    fetchFavorites();
+  }, []);
+
   const handleDoubleClick = (id) => {
     navigate(`/events/${id}`);
+  };
+
+  const toggleFavorite = async (eventId) => {
+    if (!auth.currentUser) {
+      alert('Please sign in to favorite events.');
+      return;
+    }
+    const isFavorited = favorites.includes(eventId);
+    if (isFavorited) {
+      // Remove from favorites
+      const q = query(
+        collection(firestore, 'favorites'),
+        where('userId', '==', auth.currentUser.uid),
+        where('eventId', '==', eventId)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (doc) => {
+        await deleteDoc(doc.ref);
+      });
+      setFavorites(favorites.filter(id => id !== eventId));
+    } else {
+      // Add to favorites
+      await addDoc(collection(firestore, 'favorites'), {
+        userId: auth.currentUser.uid,
+        eventId: eventId
+      });
+      setFavorites([...favorites, eventId]);
+    }
   };
 
   // Map image filename to actual import
@@ -64,7 +111,7 @@ const Events = () => {
         {events.map((event, index) => (
           <div
             key={event.id}
-            className="bg-gray-800 rounded-lg shadow-lg overflow-hidden border-4 border-[#778da9] cursor-pointer"
+            className="bg-gray-800 rounded-lg shadow-lg overflow-hidden border-4 border-[#778da9] cursor-pointer relative"
             onDoubleClick={() => handleDoubleClick(event.id)}
           >
             <img
@@ -72,6 +119,26 @@ const Events = () => {
               alt={event.title}
               className="w-full h-48 object-cover"
             />
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFavorite(event.id);
+              }}
+              className="absolute top-2 right-2 text-white text-2xl hover:text-red-500 transition"
+            >
+              {favorites.includes(event.id) ? <AiFillHeart className="text-red-500" /> : <AiOutlineHeart />}
+            </button>
+            <div className="p-4">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/events/${event.id}`);
+                }}
+                className="w-full py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+              >
+                View Detail
+              </button>
+            </div>
           </div>
         ))}
       </div>

@@ -135,8 +135,8 @@ function Register() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 px-4 font-poppins">
-      <div className="relative w-full max-w-md p-8 bg-gray-800 rounded-2xl shadow-xl border border-gray-700">
+    <div className="flex items-center justify-center min-h-screen px-4 font-poppins bg-gradient-to-br from-[#2c3e50] via-[#415a77] to-[#778da9]">
+      <div className="relative w-full max-w-md p-8 bg-gray-900 bg-opacity-90 rounded-2xl shadow-xl border border-gray-700" style={{ zIndex: 1 }}>
         <button
           onClick={() => navigate(-1)}
           className="absolute top-4 right-4 text-white text-4xl hover:text-gray-400 transition"

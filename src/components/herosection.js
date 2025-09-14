@@ -49,7 +49,7 @@ const HeroSection = () => {
         </button>
       </div>
 
-      <div className="relative mx-auto overflow-hidden" style={{ height: '380px', maxWidth: '1100px' }}>
+      <div className="relative mx-auto overflow-hidden h-40 md:h-80" style={{ maxWidth: '1100px' }}>
         <div
           className="flex absolute top-0 left-0"
           style={{
@@ -64,10 +64,9 @@ const HeroSection = () => {
                 key={index}
                 src={img}
                 alt={`Slide ${realIndex + 1}`}
+                className="w-32 h-40 md:w-44 md:h-80"
                 style={{
-                  width: '200px',
-                  height: '380px',
-                  marginRight: '10px',
+                  marginRight: '8px',
                   objectFit: 'cover',
                   borderRadius: '8px',
                   boxShadow: isCenter ? '0 8px 16px rgba(0,0,0,0.5)' : '0 4px 8px rgba(0,0,0,0.3)',

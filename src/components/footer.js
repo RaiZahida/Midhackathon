@@ -1,7 +1,7 @@
 import React from "react";
 export default function Footer() {
   return (
-    <footer className="bg-[#778da9] text-gray-300">
+    <footer className="bg-[#778da9] text-white">
       {/* Outer container with max width & horizontal padding */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top section: logo + links */}
@@ -9,8 +9,8 @@ export default function Footer() {
           
           {/* Brand Name + About */}
           <div className="md:w-1/3 flex flex-col items-center md:items-start">
-            <h1 className="text-4xl font-extrabold text-white mb-2">Z Events</h1>
-            <p className="mt-4 text-gray-200 text-center md:text-left max-w-xs">
+            <h1 className="text-4xl font-extrabold text-[#0D1B2A] mb-2">Z Events</h1>
+            <p className="mt-4 text-white text-center md:text-left max-w-xs">
               Building amazing web experiences with React & Tailwind.
             </p>
           </div>
@@ -18,7 +18,7 @@ export default function Footer() {
           {/* Link columns – responsive grid that wraps */}
           <div className="grid gap-8 grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:w-2/3">
             <div>
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider">
+              <h3 className="text-sm font-semibold text-[#0D1B2A] uppercase tracking-wider">
                 Company
               </h3>
               <ul className="mt-4 space-y-2">
@@ -29,7 +29,7 @@ export default function Footer() {
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider">
+              <h3 className="text-sm font-semibold text-[#0D1B2A] uppercase tracking-wider">
                 Support
               </h3>
               <ul className="mt-4 space-y-2">
@@ -40,7 +40,7 @@ export default function Footer() {
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider">
+              <h3 className="text-sm font-semibold text-[#0D1B2A] uppercase tracking-wider">
                 Follow Us
               </h3>
               <ul className="mt-4 space-y-2">
@@ -51,13 +51,13 @@ export default function Footer() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Bottom border + copyright */}
-        <div className="border-t border-gray-700 py-6 text-center">
-          <p className="text-gray-200 text-sm">
-            © {new Date().getFullYear()} Z Events. All rights reserved.
-          </p>
-        </div>
+      {/* Bottom border + copyright */}
+      <div className="border-t border-white py-6 text-center bg-[#0d1b2a]">
+        <p className="text-white text-sm">
+          © {new Date().getFullYear()} Z Events. All rights reserved.
+        </p>
       </div>
     </footer>
   );
