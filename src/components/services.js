@@ -3,32 +3,32 @@ import { MdEmail, MdPhotoCamera, MdMusicNote, MdDirectionsCar, MdLocationOn, MdR
 
 const services = [
   {
-    icon: <MdEmail size={40} className="text-blue-600" />,
+    icon: <MdEmail size={40} className="text-[#415A77]" />,
     title: 'Invitation Card Design',
     description: 'Custom-Designed Invitations That Reflect Your Event’s Theme And Personality, With Premium Printing Options.',
   },
   {
-    icon: <MdPhotoCamera size={40} className="text-blue-600" />,
+    icon: <MdPhotoCamera size={40} className="text-[#415A77]" />,
     title: 'Photos And Videos',
     description: 'Professional Photography And Videography Services To Capture Every Special Moment Of Your Event.',
   },
   {
-    icon: <MdMusicNote size={40} className="text-blue-600" />,
+    icon: <MdMusicNote size={40} className="text-[#415A77]" />,
     title: 'Entertainment',
     description: 'Live Bands, DJs, Performers, And Complete Sound Systems Tailored To Your Event’s Atmosphere.',
   },
   {
-    icon: <MdDirectionsCar size={40} className="text-blue-600" />,
+    icon: <MdDirectionsCar size={40} className="text-[#415A77]" />,
     title: 'Event Vehicles',
     description: 'Luxury Transportation Services Including Limousines, Vintage Cars, And Shuttle Services For Guests.',
   },
   {
-    icon: <MdLocationOn size={40} className="text-blue-600" />,
+    icon: <MdLocationOn size={40} className="text-[#415A77]" />,
     title: 'Venue Selection',
     description: 'Expert Guidance in Selecting The Perfect Venue From Our Extensive Network Of Premium Locations.',
   },
   {
-    icon: <MdRestaurant size={40} className="text-blue-600" />,
+    icon: <MdRestaurant size={40} className="text-[#415A77]" />,
     title: 'Food Catering',
     description: 'Gourmet Catering Services With Customizable Menus To Suit All Dietary Requirements And Preferences.',
   },
@@ -38,7 +38,7 @@ const Services = () => {
   return (
     <section id="services" className="py-12 bg-gray-900 text-white px-4">
       <h2 className="text-3xl font-bold text-center mb-10">
-        OUR <span className="text-blue-600">SERVICES</span>
+        OUR <span className="text-[#415A77]">SERVICES</span>
       </h2>
       <div className="max-w-7xl mx-auto grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {services.map((service, index) => (

@@ -215,13 +215,7 @@ function SignUpLoginPage() {
                 >
                   Forgot Password?
                 </p>
-                <button
-                  type="button"
-                  onClick={handleAdminLogin}
-                  className="w-full mt-2 py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-                >
-                  Sign In as Admin
-                </button>
+
               </>
             )}
           </form>
