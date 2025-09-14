@@ -25,7 +25,13 @@ function SignUpLoginPage() {
   // Track login state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) navigate("/");
+      if (user) {
+        if (user.email === 'admin@admin.com') {
+          navigate('/dashboard');
+        } else {
+          navigate('/');
+        }
+      }
     });
     return () => unsubscribe();
   }, [navigate]);
@@ -66,6 +72,17 @@ function SignUpLoginPage() {
       await signInWithPopup(auth, googleProvider);
       localStorage.setItem('signInMessage', 'Successfully signed in with Google!');
       navigate("/");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  // Admin login
+  const handleAdminLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, 'admin@admin.com', 'admin123');
+      localStorage.setItem('signInMessage', 'Successfully signed in as admin!');
+      navigate('/dashboard');
     } catch (error) {
       alert(error.message);
     }
@@ -184,21 +201,30 @@ function SignUpLoginPage() {
                   required
                 />
               </div>
-              <button
-                type="submit"
-                className="w-full py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
-              >
-                {isLogin ? "Login" : "Sign Up"}
-              </button>
-              {isLogin && (
+            <button
+              type="submit"
+              className="w-full py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+            >
+              {isLogin ? "Login" : "Sign Up"}
+            </button>
+            {isLogin && (
+              <>
                 <p
                   onClick={() => setIsResettingPassword(true)}
                   className="text-sm text-center text-indigo-600 cursor-pointer hover:underline"
                 >
                   Forgot Password?
                 </p>
-              )}
-            </form>
+                <button
+                  type="button"
+                  onClick={handleAdminLogin}
+                  className="w-full mt-2 py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                >
+                  Sign In as Admin
+                </button>
+              </>
+            )}
+          </form>
 
             {/* Divider */}
             <div className="mt-6 flex items-center justify-center">

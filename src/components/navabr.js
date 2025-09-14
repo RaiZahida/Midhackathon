@@ -17,22 +17,13 @@ function Navbar() {
 
 useEffect(() => {
     console.log('Navbar useEffect running');
-    const logoutMsg = localStorage.getItem('logoutMessage');
-    console.log('logoutMsg:', logoutMsg);
-    if (logoutMsg) {
-        localStorage.removeItem('logoutMessage');
-        setTimeout(() => {
-            setLogoutMessage(logoutMsg);
-            setTimeout(() => setLogoutMessage(''), 5000);
-        }, 1000);
-    }
     const signUpMsg = localStorage.getItem('signUpMessage');
     console.log('signUpMsg:', signUpMsg);
     if (signUpMsg) {
         localStorage.removeItem('signUpMessage');
         setTimeout(() => {
             setSignUpMessage(signUpMsg);
-            setTimeout(() => setSignUpMessage(''), 5000);
+            setTimeout(() => setSignUpMessage(''), 2000);
         }, 1000);
     }
     const signInMsg = localStorage.getItem('signInMessage');
@@ -41,7 +32,7 @@ useEffect(() => {
         localStorage.removeItem('signInMessage');
         setTimeout(() => {
             setSignInMessage(signInMsg);
-            setTimeout(() => setSignInMessage(''), 5000);
+            setTimeout(() => setSignInMessage(''), 2000);
         }, 1000);
     }
 }, []);
@@ -63,10 +54,13 @@ useEffect(() => {
     setShowLogoutModal(false);
     try {
       await signOut(auth);
-      localStorage.setItem('logoutMessage', 'You have been successfully logged out.');
       setTimeout(() => {
-        navigate('/');
-      }, 2000);
+        setLogoutMessage('You have been successfully logged out.');
+        setTimeout(() => {
+          setLogoutMessage('');
+          navigate('/');
+        }, 2000);
+      }, 1000);
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -74,19 +68,50 @@ useEffect(() => {
 
   return (
     <>
-      <div className="bg-blue-600 text-white shadow-md">
+      <div className="bg-[#0d1b2a] text-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
 
           {/* Brand */}
-          <Link to="/" className="text-2xl font-bold">
-            MyApp
+          <Link to="/" className="text-2xl font-bold flex items-center">
+            <span style={{ color: '#415a77' }}>Z</span>
+            <span style={{ color: '#e0e1dd' }}>events</span>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-6">
-            <Link to="/" className="hover:text-gray-200">Home</Link>
-            <Link to="/about" className="hover:text-gray-200">About</Link>
-            <Link to="/dashboard" className="hover:text-gray-200">Dashboard</Link>
+          <div className="hidden md:flex space-x-4 lg:space-x-6">
+            <Link to="/" className="hover:text-[#778da9] text-sm lg:text-base">Home</Link>
+            <button
+              onClick={() => {
+                navigate('/');
+                setTimeout(() => {
+                  const servicesSection = document.getElementById('services');
+                  if (servicesSection) {
+                    servicesSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }, 100);
+              }}
+              className="hover:text-[#778da9] bg-transparent border-none cursor-pointer text-sm lg:text-base"
+            >
+              Services
+            </button>
+            <button
+              onClick={() => {
+                navigate('/');
+                setTimeout(() => {
+                  const formSection = document.querySelector('section.relative.bg-cover');
+                  if (formSection) {
+                    formSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }, 100);
+              }}
+              className="hover:text-[#778da9] bg-transparent border-none cursor-pointer text-sm lg:text-base"
+            >
+              Contact
+            </button>
+            <Link to="/events" className="hover:text-[#778da9] text-sm lg:text-base">Events</Link>
+            {userEmail === 'admin@admin.com' && (
+              <Link to="/admin" className="hover:text-[#778da9] text-sm lg:text-base">Admin</Link>
+            )}
           </div>
 
           {/* Auth Button */}
@@ -97,7 +122,7 @@ useEffect(() => {
                   navigate('/signin');
                   setIsMobileMenuOpen(false);
                 }}
-                className="font-sans text-sm sm:text-base font-bold text-white border border-white bg-transparent hover:bg-white hover:text-blue-600 transition-all duration-300 px-3 py-2 rounded-lg block text-center lg:text-left"
+              className="font-sans text-sm sm:text-base font-bold text-white border border-white bg-transparent hover:bg-[#415a77] hover:text-[#e0e1dd] transition-all duration-300 px-3 py-2 rounded-lg block text-center lg:text-left"
               >
                 Sign In
               </button>
@@ -109,7 +134,7 @@ useEffect(() => {
                   setShowLogoutModal(true);
                   setIsMobileMenuOpen(false);
                 }}
-                className="font-sans text-sm sm:text-base font-bold text-white border border-white bg-transparent hover:bg-white hover:text-red-600 transition-all duration-300 px-3 py-2 rounded-lg block text-center lg:text-left"
+              className="font-sans text-sm sm:text-base font-bold text-white border border-white bg-transparent hover:bg-[#415a77] hover:text-[#e0e1dd] transition-all duration-300 px-3 py-2 rounded-lg block text-center lg:text-left"
               >
                 Logout
               </button>
@@ -126,15 +151,47 @@ useEffect(() => {
         </div>
 
         {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden bg-blue-700 px-4 pb-3 space-y-2">
-            <Link to="/" className="block hover:text-gray-200">Home</Link>
-            <Link to="/about" className="block hover:text-gray-200">About</Link>
-            <Link to="/dashboard" className="block hover:text-gray-200">Dashboard</Link>
+          {isOpen && (
+          <div className="md:hidden bg-[#1b263b] px-4 pb-3 space-y-2 text-sm text-center">
+            <Link to="/" className="block text-white hover:text-[#778da9]">Home</Link>
+            <button
+              onClick={() => {
+                navigate('/');
+                setIsMobileMenuOpen(false);
+                setTimeout(() => {
+                  const servicesSection = document.getElementById('services');
+                  if (servicesSection) {
+                    servicesSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }, 100);
+              }}
+              className="block text-white hover:text-[#778da9] bg-transparent border-none cursor-pointer w-full"
+            >
+              Services
+            </button>
+            <button
+              onClick={() => {
+                navigate('/');
+                setIsMobileMenuOpen(false);
+                setTimeout(() => {
+                  const formSection = document.querySelector('section.relative.bg-cover');
+                  if (formSection) {
+                    formSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }, 100);
+              }}
+              className="block text-white hover:text-[#778da9] bg-transparent border-none cursor-pointer w-full"
+            >
+              Contact
+            </button>
+            <Link to="/events" className="block text-white hover:text-[#778da9]">Events</Link>
+            {userEmail === 'admin@admin.com' && (
+              <Link to="/dashboard" className="block text-white hover:text-[#778da9]">Dashboard</Link>
+            )}
 
             <Link
               to="/signin"
-              className="block bg-white text-blue-600 px-3 py-1 rounded-md hover:bg-gray-100"
+              className="block bg-[#778da9] text-[#e0e1dd] px-3 py-1 rounded-md hover:bg-[#415a77] mx-auto w-fit"
               onClick={() => setIsOpen(false)}
             >
               Sign In
@@ -142,27 +199,27 @@ useEffect(() => {
           </div>
         )}
         {showLogoutModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-md p-4">
-            <div className="bg-gray-900 rounded-2xl p-6 sm:p-8 md:p-10 max-w-sm sm:max-w-md lg:max-w-lg mx-4 border border-gray-700 shadow-2xl transform scale-100 transition-transform duration-300 w-full">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0d1b2a] bg-opacity-90 backdrop-blur-md p-4">
+            <div className="bg-[#415a77] rounded-2xl p-6 sm:p-8 md:p-10 max-w-sm sm:max-w-md lg:max-w-lg mx-4 border border-[#778da9] shadow-2xl transform scale-100 transition-transform duration-300 w-full">
               <div className="flex items-center mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-red-600 rounded-full flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#778da9] rounded-full flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#e0e1dd]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                   </svg>
                 </div>
-                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white">Confirm Logout</h2>
+                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#e0e1dd]">Confirm Logout</h2>
               </div>
-              <p className="mb-6 sm:mb-8 md:mb-10 text-gray-400 leading-relaxed text-sm sm:text-base md:text-lg">Are you sure you want to logout from your account? This will end your current session.</p>
+              <p className="mb-6 sm:mb-8 md:mb-10 text-[#e0e1dd] leading-relaxed text-sm sm:text-base md:text-lg">Are you sure you want to logout from your account? This will end your current session.</p>
               <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4">
                 <button
                   onClick={() => setShowLogoutModal(false)}
-                  className="px-6 sm:px-8 py-3 bg-gray-700 text-white rounded-xl hover:bg-gray-600 transition-all duration-300 font-semibold shadow-md w-full sm:w-auto"
+                  className="px-6 sm:px-8 py-3 bg-[#778da9] text-[#e0e1dd] rounded-xl hover:bg-[#415a77] transition-all duration-300 font-semibold shadow-md w-full sm:w-auto"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleLogout}
-                  className="px-6 sm:px-8 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl w-full sm:w-auto"
+                  className="px-6 sm:px-8 py-3 bg-[#415a77] text-[#e0e1dd] rounded-xl hover:bg-[#778da9] transition-all duration-300 font-semibold shadow-lg hover:shadow-xl w-full sm:w-auto"
                 >
                   Logout
                 </button>
